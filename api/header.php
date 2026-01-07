@@ -99,7 +99,7 @@ header("X-XSS-Protection: 1; mode=block");
 
       <div id="logo-section" class="absolute top-2 left-0 flex items-center space-x-3 pl-3 fade-up">
         <a href="index.php" aria-label="Kanchava Brass Components Home">
-          <img src="uploads\kbclogo.png" alt="Kanchava Brass Components Logo" class="h-16 w-auto">
+          <img src="uploads/kbclogo.png" alt="Kanchava Brass Components Logo" class="h-16 w-auto">
         </a>
         <div class="flex flex-col leading-tight">
           <a href="index.php" class="text-2xl font-bold text-molten-400 tracking-wide">KANCHAVA</a>
@@ -116,7 +116,7 @@ header("X-XSS-Protection: 1; mode=block");
       </div>
 
       <div id="flag-section" class="hidden md:flex items-center absolute top-2 right-4 fade-up">
-        <img src="uploads\giphy.gif" alt="India Flag" class="h-14 w-auto floating ml-4">
+        <img src="uploads/giphy.gif" alt="India Flag" class="h-14 w-auto floating ml-4">
       </div>
 
       <div class="md:hidden absolute right-4 fade-up">

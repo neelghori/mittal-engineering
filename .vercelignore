@@ -1,28 +1,8 @@
-# Exclude large directories from serverless function
-uploads/
-database/
+# Only exclude files that should never be deployed
+# Note: uploads/ is excluded from function bundle via vercel.json excludeFiles,
+# but should still be deployed as static assets
 .git/
 node_modules/
-admin/
-
-# Exclude large files
-*.mp4
-*.pdf
-*.zip
-*.tar.gz
 *.sql
-
-# Exclude image files (they should be served as static assets)
-*.png
-*.jpg
-*.jpeg
-*.gif
-*.svg
-*.webp
-
-# Keep only PHP files and necessary config files
-!api/
-!*.php
-!config.php
-!vercel.json
+database/
 

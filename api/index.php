@@ -51,7 +51,7 @@ $testimonials = getItems($conn, 'testimonials');
 </style>
 <section class="relative min-h-[90vh] flex items-center justify-center text-center text-white px-6 overflow-hidden" data-aos="fade-up">
   <div class="absolute inset-0">
-    <img src="uploads\10.png" 
+    <img src="uploads/10.png" 
           alt="Precision machined brass, copper, and stainless steel components" 
           class="w-full h-full object-cover opacity-40">
     <div class="absolute inset-0 bg-gradient-to-br from-industrial-950/90 via-industrial-900/85 to-industrial-800/80"></div>
@@ -222,7 +222,7 @@ $testimonials = getItems($conn, 'testimonials');
         <i data-feather="file-text" class="text-molten-400 w-12 h-12 mx-auto mb-4" aria-hidden="true"></i>
         <h3 class="text-xl font-semibold text-white mb-2">Product Brochure</h3>
         <p class="text-industrial-300 mb-4">Comprehensive guide to our materials and services.</p>
-        <a href="uploads\KBC Brochure.pdf" target="_blank" class="bg-molten-500 hover:bg-molten-600 text-white px-6 py-3 rounded-lg font-semibold inline-flex items-center transition-transform transform hover:scale-105">
+        <a href="uploads/KBC Brochure.pdf" target="_blank" class="bg-molten-500 hover:bg-molten-600 text-white px-6 py-3 rounded-lg font-semibold inline-flex items-center transition-transform transform hover:scale-105">
           Download PDF <i data-feather="download" class="ml-2 w-5 h-5"></i>
         </a>
       </div>

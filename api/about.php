@@ -16,7 +16,7 @@ include 'header.php';
 
   <!-- Hero Section -->
   <section class="relative flex items-center justify-center h-[550px] overflow-hidden" data-aos="fade-up">
-    <img src="uploads\aboutus.png" 
+    <img src="uploads/aboutus.png" 
          alt="Precision metalwork background"
          class="absolute inset-0 w-full h-full object-cover opacity-40" loading="lazy">
     <div class="absolute inset-0 bg-gradient-to-br from-industrial-950/80 via-industrial-900/75 to-industrial-800/70"></div>
@@ -37,7 +37,7 @@ include 'header.php';
   <section class="py-24 px-6 lg:px-8 max-w-7xl mx-auto" data-aos="fade-up">
     <div class="grid md:grid-cols-2 gap-16 items-center">
       <div class="relative" data-aos="fade-right" data-aos-delay="100">
-        <img src="uploads\about.jpeg"
+        <img src="uploads/about.jpeg"
              alt="Fusion of heritage and modern engineering"
              loading="lazy"
              class="rounded-xl shadow-2xl w-full h-auto object-cover border border-industrial-700/60 transform rotate-1 hover:rotate-0 transition-transform duration-500">

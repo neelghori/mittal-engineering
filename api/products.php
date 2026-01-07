@@ -86,7 +86,7 @@ body { font-family: 'Montserrat', sans-serif; background-color: #0a0a0a; color: 
     border-bottom: 3px solid #f97316;
     background: 
         linear-gradient(135deg, rgba(26, 26, 26, 0.8), rgba(10, 10, 10, 0.9)),
-        url('uploads\products.jpeg') center/cover no-repeat;
+        url('uploads/products.jpeg') center/cover no-repeat;
 }
 .hero-content { 
     position: relative; 
