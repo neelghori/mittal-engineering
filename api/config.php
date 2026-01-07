@@ -18,7 +18,7 @@ if (!defined('BASE_PATH')) {
 
 // --- 2. DATABASE CONFIGURATION ---
 
-$servername = "localhost";
+$servername = "118.139.183.156";
 $username = "SeventGraphic";        // MySQL username (often 'root' on WAMP)
 $password = "seventhGraphicTeam@2025";            // MySQL password (often empty on WAMP)
 $dbname = "metalcraft_db"; // Your actual database name
