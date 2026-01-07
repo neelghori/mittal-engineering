@@ -1,10 +1,13 @@
 {
     "functions": {
       "api/*.php": {
-        "runtime": "vercel-php@0.7.4"
+        "runtime": "vercel-php@0.7.4",
+        "excludeFiles": "{uploads/**,database/**,admin/**,*.mp4,*.pdf,*.png,*.jpg,*.jpeg,*.gif,*.sql}"
       }
     },
     "routes": [
+      { "src": "/uploads/(.*)", "dest": "/uploads/$1" },
+      { "src": "/(.*\\.(png|jpg|jpeg|gif|pdf|mp4|css|js|ico|svg|woff|woff2|ttf|eot))", "dest": "/$1" },
       { "src": "/(.*)",  "dest": "/api/index.php" }
     ]
   }
