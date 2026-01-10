@@ -89,8 +89,7 @@ body {
 </head>
 <body class="overflow-x-hidden">
 
-<!-- Navigation -->
-<?php include 'header.php'; ?>
+
 
 <!-- Product Detail Hero Section -->
 <section class="pt-32 pb-20 px-4 sm:px-6 lg:px-8 hero-gradient relative overflow-hidden">
