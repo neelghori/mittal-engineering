@@ -2,12 +2,22 @@
     "functions": {
       "api/*.php": {
         "runtime": "vercel-php@0.7.4",
-        "excludeFiles": "{uploads/**,database/**,admin/**,*.mp4,*.pdf,*.sql}"
+        "excludeFiles": "{uploads/**,database/**,*.mp4,*.pdf,*.sql}"
       }
     },
     "routes": [
       { "src": "/uploads/(.*)", "dest": "/uploads/$1", "headers": { "Cache-Control": "public, max-age=31536000, immutable" } },
       { "src": "/(.*\\.(png|jpg|jpeg|gif|pdf|mp4|css|js|ico|svg|woff|woff2|ttf|eot))", "dest": "/$1", "headers": { "Cache-Control": "public, max-age=31536000, immutable" } },
+      { "src": "/admin/(.*)", "dest": "/api/admin/$1" },
+      { "src": "/about.php", "dest": "/api/about.php" },
+      { "src": "/products.php", "dest": "/api/products.php" },
+      { "src": "/product-detail.php", "dest": "/api/product-detail.php" },
+      { "src": "/capabilities.php", "dest": "/api/capabilities.php" },
+      { "src": "/contact.php", "dest": "/api/contact.php" },
+      { "src": "/inquiry.php", "dest": "/api/inquiry.php" },
+      { "src": "/submit_contact.php", "dest": "/api/submit_contact.php" },
+      { "src": "/index.php", "dest": "/api/index.php" },
+      { "src": "/", "dest": "/api/index.php" },
       { "src": "/(.*)",  "dest": "/api/index.php" }
     ]
   }
