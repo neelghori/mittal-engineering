@@ -24,6 +24,7 @@ if(!$product) {
     echo "Product not found!";
     exit;
 }
+include 'header.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
