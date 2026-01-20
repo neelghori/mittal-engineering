@@ -1,10 +1,21 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    // Configure session for Vercel/serverless environment
+    ini_set('session.cookie_httponly', '1');
+    ini_set('session.use_only_cookies', '1');
+    ini_set('session.cookie_secure', isset($_SERVER['HTTPS']));
+    session_start();
+}
 require_once __DIR__ . '/../config.php';
 
 // ✅ Admin access check
+// Debug: Check if session exists (remove after testing)
 if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
-    header("Location: admin-login.php");
+    // Use absolute redirect URL for Vercel compatibility
+    $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https://' : 'http://';
+    $host = $_SERVER['HTTP_HOST'];
+    $path = dirname($_SERVER['REQUEST_URI']);
+    header("Location: " . $protocol . $host . $path . "/admin-login.php");
     exit;
 }
 

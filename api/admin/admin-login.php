@@ -1,12 +1,25 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    // Configure session for Vercel/serverless environment
+    ini_set('session.cookie_httponly', '1');
+    ini_set('session.use_only_cookies', '1');
+    ini_set('session.cookie_secure', isset($_SERVER['HTTPS']));
+    session_start();
+}
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
     if ($username === "admin" && $password === "kbc_jamnagar") {
         $_SESSION['admin_logged_in'] = true;
-        header("Location: admin-dashboard.php");
+        $_SESSION['admin_username'] = $username; // Store username as well
+        // Explicitly write and close session before redirect
+        session_write_close();
+        // Use absolute redirect URL for Vercel compatibility
+        $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https://' : 'http://';
+        $host = $_SERVER['HTTP_HOST'];
+        $path = dirname($_SERVER['REQUEST_URI']);
+        header("Location: " . $protocol . $host . $path . "/admin-dashboard.php");
         exit;
     } else {
         $error = "Invalid login details!";
