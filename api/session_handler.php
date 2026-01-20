@@ -18,14 +18,15 @@ class DatabaseSessionHandler implements SessionHandlerInterface {
         ");
     }
     
-    public function open($save_path, $session_name) {
+    public function open($save_path, $session_name): bool {
         return true;
     }
     
-    public function close() {
+    public function close(): bool {
         return true;
     }
     
+    #[\ReturnTypeWillChange]
     public function read($session_id) {
         $stmt = $this->conn->prepare("SELECT data FROM sessions WHERE id = ?");
         $stmt->bind_param("s", $session_id);
@@ -41,7 +42,7 @@ class DatabaseSessionHandler implements SessionHandlerInterface {
         return '';
     }
     
-    public function write($session_id, $session_data) {
+    public function write($session_id, $session_data): bool {
         $stmt = $this->conn->prepare("
             INSERT INTO sessions (id, data, last_activity) 
             VALUES (?, ?, ?) 
@@ -52,17 +53,21 @@ class DatabaseSessionHandler implements SessionHandlerInterface {
         return $stmt->execute();
     }
     
-    public function destroy($session_id) {
+    public function destroy($session_id): bool {
         $stmt = $this->conn->prepare("DELETE FROM sessions WHERE id = ?");
         $stmt->bind_param("s", $session_id);
         return $stmt->execute();
     }
     
+    #[\ReturnTypeWillChange]
     public function gc($maxlifetime) {
         $old = time() - $maxlifetime;
         $stmt = $this->conn->prepare("DELETE FROM sessions WHERE last_activity < ?");
         $stmt->bind_param("i", $old);
-        return $stmt->execute();
+        if ($stmt->execute()) {
+            return $stmt->affected_rows;
+        }
+        return false;
     }
 }
 

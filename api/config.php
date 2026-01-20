@@ -2,7 +2,22 @@
 // config.php
 // Global application and database configuration settings
 
-// --- 1. APPLICATION CONSTANTS ---
+// --- 1. SESSION CONFIGURATION FOR VERCEL ---
+// Configure session settings FIRST before any output or database connection
+// This MUST run before any session_start() calls or output
+if (session_status() === PHP_SESSION_NONE && !isset($GLOBALS['session_handler_set'])) {
+    // Configure session cookie settings for Vercel BEFORE setting handler
+    ini_set('session.cookie_httponly', '1');
+    ini_set('session.use_only_cookies', '1');
+    ini_set('session.cookie_secure', isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? '1' : '0');
+    ini_set('session.cookie_samesite', 'Lax');
+    ini_set('session.gc_maxlifetime', 86400); // 24 hours
+    
+    // Mark handler as being set (we'll complete it after DB connection)
+    $GLOBALS['session_handler_set'] = true;
+}
+
+// --- 2. APPLICATION CONSTANTS ---
 
 // Define the recipient for contact form emails
 // !!! IMPORTANT: CHANGE THIS TO YOUR ACTUAL EMAIL ADDRESS !!!
@@ -15,8 +30,7 @@ if (!defined('BASE_PATH')) {
     define('BASE_PATH', '/demo');
 }
 
-
-// --- 2. DATABASE CONFIGURATION ---
+// --- 3. DATABASE CONFIGURATION ---
 
 $servername = "118.139.183.156";
 $username = "SeventGraphic";        // MySQL username (often 'root' on WAMP)
@@ -26,15 +40,23 @@ $dbname = "metalcraft_db"; // Your actual database name
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Check connection and stop execution if it fails
+// Check connection and stop execution if it fails (but don't output yet if sessions not configured)
 if ($conn->connect_error) {
+    // Only output error if sessions are already configured, otherwise configure sessions first
+    if (!isset($GLOBALS['session_handler_set'])) {
+        // Configure basic session settings before outputting error
+        ini_set('session.cookie_httponly', '1');
+        ini_set('session.use_only_cookies', '1');
+        ini_set('session.cookie_secure', isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? '1' : '0');
+        ini_set('session.cookie_samesite', 'Lax');
+    }
     die("Connection failed: " . $conn->connect_error);
 }
 
-// --- 3. SESSION CONFIGURATION FOR VERCEL ---
-// Configure database-based sessions for serverless environment
-// This MUST run before any session_start() calls
-if (session_status() === PHP_SESSION_NONE && !isset($GLOBALS['session_handler_set'])) {
+// --- 4. COMPLETE SESSION HANDLER SETUP ---
+// Now that we have DB connection, set up database session handler
+// Only configure if headers haven't been sent yet
+if (session_status() === PHP_SESSION_NONE && isset($GLOBALS['session_handler_set']) && !isset($GLOBALS['session_handler_configured']) && !headers_sent()) {
     // Include session handler for database-backed sessions
     require_once __DIR__ . '/session_handler.php';
     
@@ -42,13 +64,6 @@ if (session_status() === PHP_SESSION_NONE && !isset($GLOBALS['session_handler_se
     $handler = new DatabaseSessionHandler($conn);
     session_set_save_handler($handler, true);
     
-    // Configure session cookie settings for Vercel
-    ini_set('session.cookie_httponly', '1');
-    ini_set('session.use_only_cookies', '1');
-    ini_set('session.cookie_secure', isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on');
-    ini_set('session.cookie_samesite', 'Lax');
-    ini_set('session.gc_maxlifetime', 86400); // 24 hours
-    
-    // Mark handler as set to prevent duplicate setup
-    $GLOBALS['session_handler_set'] = true;
+    // Mark handler as fully configured
+    $GLOBALS['session_handler_configured'] = true;
 }
