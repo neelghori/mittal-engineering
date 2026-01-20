@@ -6,12 +6,15 @@
 // Configure session settings FIRST before any output or database connection
 // This MUST run before any session_start() calls or output
 if (session_status() === PHP_SESSION_NONE && !isset($GLOBALS['session_handler_set'])) {
-    // Configure session cookie settings for Vercel BEFORE setting handler
-    ini_set('session.cookie_httponly', '1');
-    ini_set('session.use_only_cookies', '1');
-    ini_set('session.cookie_secure', isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? '1' : '0');
-    ini_set('session.cookie_samesite', 'Lax');
-    ini_set('session.gc_maxlifetime', 86400); // 24 hours
+    // Only configure session ini settings if headers haven't been sent
+    // If headers are already sent, sessions will use default settings
+    if (!headers_sent()) {
+        @ini_set('session.cookie_httponly', '1');
+        @ini_set('session.use_only_cookies', '1');
+        @ini_set('session.cookie_secure', isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? '1' : '0');
+        @ini_set('session.cookie_samesite', 'Lax');
+        @ini_set('session.gc_maxlifetime', 86400); // 24 hours
+    }
     
     // Mark handler as being set (we'll complete it after DB connection)
     $GLOBALS['session_handler_set'] = true;
@@ -40,16 +43,9 @@ $dbname = "metalcraft_db"; // Your actual database name
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Check connection and stop execution if it fails (but don't output yet if sessions not configured)
+// Check connection and stop execution if it fails
 if ($conn->connect_error) {
-    // Only output error if sessions are already configured, otherwise configure sessions first
-    if (!isset($GLOBALS['session_handler_set'])) {
-        // Configure basic session settings before outputting error
-        ini_set('session.cookie_httponly', '1');
-        ini_set('session.use_only_cookies', '1');
-        ini_set('session.cookie_secure', isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? '1' : '0');
-        ini_set('session.cookie_samesite', 'Lax');
-    }
+    // If we can't set session settings, just die with error
     die("Connection failed: " . $conn->connect_error);
 }
 
