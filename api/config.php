@@ -30,3 +30,25 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
+
+// --- 3. SESSION CONFIGURATION FOR VERCEL ---
+// Configure database-based sessions for serverless environment
+// This MUST run before any session_start() calls
+if (session_status() === PHP_SESSION_NONE && !isset($GLOBALS['session_handler_set'])) {
+    // Include session handler for database-backed sessions
+    require_once __DIR__ . '/session_handler.php';
+    
+    // Set session handler to use database
+    $handler = new DatabaseSessionHandler($conn);
+    session_set_save_handler($handler, true);
+    
+    // Configure session cookie settings for Vercel
+    ini_set('session.cookie_httponly', '1');
+    ini_set('session.use_only_cookies', '1');
+    ini_set('session.cookie_secure', isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on');
+    ini_set('session.cookie_samesite', 'Lax');
+    ini_set('session.gc_maxlifetime', 86400); // 24 hours
+    
+    // Mark handler as set to prevent duplicate setup
+    $GLOBALS['session_handler_set'] = true;
+}

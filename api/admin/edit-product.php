@@ -1,6 +1,8 @@
 <?php
-session_start();
-include '../config.php'; // ✅ Correct path
+require_once __DIR__ . '/../config.php';
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 // --- Admin access check ---
 if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {

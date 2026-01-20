@@ -120,8 +120,8 @@ include 'header.php';
                     <h2 class="text-2xl font-bold text-industrial-50 mb-4 flex items-center"><i data-feather="users" class="w-6 h-6 mr-2 text-molten-400"></i> Follow Us</h2>
                     <div class="flex space-x-6">
                         <a href="https://www.facebook.com/profile.php?id=61583067689506" class="text-industrial-300 hover:text-molten-400 hover:scale-110 transition-transform duration-300" aria-label="Facebook"><i data-feather="facebook" class="w-7 h-7"></i></a>
-                        <a href="https://www.instagram.com/kanchava_brass_components/" class="text-industrial-300 hover:text-molten-400 hover:scale-110 transition-transform duration-300" aria-label="LinkedIn"><i data-feather="linkedin" class="w-7 h-7"></i></a>
-                        <a href="https://www.linkedin.com/in/kanchava-brass-components-kbc" class="text-industrial-300 hover:text-molten-400 hover:scale-110 transition-transform duration-300" aria-label="Instagram"><i data-feather="instagram" class="w-7 h-7"></i></a>
+                        <a href="https://www.linkedin.com/in/kanchava-brass-components-kbc" class="text-industrial-300 hover:text-molten-400 hover:scale-110 transition-transform duration-300" aria-label="LinkedIn"><i data-feather="linkedin" class="w-7 h-7"></i></a>
+                        <a href="https://www.instagram.com/kanchava_brass_components/" class="text-industrial-300 hover:text-molten-400 hover:scale-110 transition-transform duration-300" aria-label="Instagram"><i data-feather="instagram" class="w-7 h-7"></i></a>
                     </div>
                 </div>
             </div>

@@ -1,9 +1,8 @@
 <?php
+// Start session - config.php will configure database-backed sessions
+require_once __DIR__ . '/../config.php';
+
 if (session_status() === PHP_SESSION_NONE) {
-    // Configure session for Vercel/serverless environment
-    ini_set('session.cookie_httponly', '1');
-    ini_set('session.use_only_cookies', '1');
-    ini_set('session.cookie_secure', isset($_SERVER['HTTPS']));
     session_start();
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -12,14 +11,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($username === "admin" && $password === "kbc_jamnagar") {
         $_SESSION['admin_logged_in'] = true;
-        $_SESSION['admin_username'] = $username; // Store username as well
-        // Explicitly write and close session before redirect
+        $_SESSION['admin_username'] = $username;
+        $_SESSION['admin_login_time'] = time();
+        // Write session to database
         session_write_close();
-        // Use absolute redirect URL for Vercel compatibility
-        $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https://' : 'http://';
-        $host = $_SERVER['HTTP_HOST'];
-        $path = dirname($_SERVER['REQUEST_URI']);
-        header("Location: " . $protocol . $host . $path . "/admin-dashboard.php");
+        // Simple redirect - will work with Vercel routing
+        header("Location: admin-dashboard.php");
         exit;
     } else {
         $error = "Invalid login details!";
